@@ -12,12 +12,13 @@
   --env-stroke: #e75480;
 }
 
-/* ------------------- BASE STYLES ------------------- */
+/* Base Styles */
 html,body{
   height:100%;
   margin:0;
   font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: linear-gradient(135deg, #fff3f9 0%, #ffc0cb 100%);
+  background: url('bg.png') no-repeat center center fixed;
+  background-size: cover;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -32,7 +33,7 @@ html,body{
   z-index: 10;
 }
 
-/* ------------------- DECORATIONS ------------------- */
+/* Decorations */
 .decorations {
   position: fixed;
   top: 0;
@@ -82,14 +83,12 @@ html,body{
 
 /* Confetti */
 .confetti { width:6px; height:6px; background:#ffd700; border-radius:2px; }
-
 /* Flowers */
 .flower { width:8px; height:8px; background:#ff66cc; border-radius:50%; }
-
 /* Cakes */
 .cake { width:10px; height:10px; background:#ff9966; border-radius:3px; }
 
-/* Keyframes for floating animation */
+/* Floating animation */
 @keyframes floatUp {
   0% { transform: translateY(100vh) translateX(0) scale(0.5); opacity:0; }
   20% { opacity:0.8; }
@@ -98,7 +97,7 @@ html,body{
   100% { transform: translateY(-10vh) translateX(-15px) scale(0.5); opacity:0; }
 }
 
-/* ------------------- BURST HEART ------------------- */
+/* Burst Heart */
 .burst-heart {
   position: fixed;
   width: 15px;
@@ -119,7 +118,7 @@ html,body{
 .burst-heart::before { top:-50%; left:0; }
 .burst-heart::after { left:50%; top:0; }
 
-/* ------------------- ENVELOPE ------------------- */
+/* Envelope */
 .envelope {
   width: var(--env-w);
   height: var(--env-h);
@@ -132,14 +131,9 @@ html,body{
   overflow: visible;
   -webkit-tap-highlight-color: transparent;
 }
-.env-svg {
-  width: 100%;
-  height: 100%;
-  display:block;
-}
-.env-shadow {
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.18));
-}
+.env-svg { width: 100%; height: 100%; display:block; }
+.env-shadow { filter: drop-shadow(0 10px 18px rgba(0,0,0,0.18)); }
+
 /* Heart on envelope */
 .heart {
   position: absolute;
@@ -168,27 +162,37 @@ html,body{
 .letter {
   position: absolute;
   left:50%;
-  width:90vw;
+  width:90%;
+  max-width: 95vw; 
   transform: translateX(-50%);
   top:240px;
   background:#fffdf5;
   border-radius:10px;
   padding:4vw;
+  box-sizing: border-box; 
   box-shadow:0 10px 24px rgba(0,0,0,0.14);
   border:1px solid rgba(0,0,0,0.06);
   opacity:0;
   transition: top 700ms cubic-bezier(.2,.9,.25,1), opacity 400ms ease, transform 700ms cubic-bezier(.2,.9,.25,1);
   z-index:20;
   pointer-events:none;
+  word-wrap: break-word;
 }
 .stage.open .letter{
   top:10px;
   opacity:1;
   pointer-events:auto;
 }
-.letter h2{ margin:0 0 10px 0; color:#d81b60; font-size:5vw; }
-.letter p{ margin:0; color:#333; line-height:1.6; font-size:4vw; }
+.letter h2{ margin:0 0 10px 0; color:#d81b60; font-size:5vw; line-height:1.2; }
+.letter p{ margin:0; color:#333; line-height:1.5; font-size:4vw; }
 
+/* Responsive tweaks */
+@media (max-width:420px){
+  .heart{ width:16vw; height:16vw; }
+  .letter { padding:5vw; }
+  .letter h2{ font-size:6vw; }
+  .letter p{ font-size:4.5vw; }
+}
 </style>
 </head>
 <body>
@@ -196,7 +200,7 @@ html,body{
 <div class="decorations" id="decorations"></div>
 
 <div class="stage" id="stage">
-  <div class="envelope" id="envelope" aria-hidden="false" title="Open">
+  <div class="envelope" id="envelope">
     <svg class="env-svg env-shadow" viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
       <rect x="6" y="6" rx="8" ry="8" width="328" height="208" fill="#f8a5c2" stroke="#e75480" stroke-width="4"/>
       <line x1="6" y1="6"   x2="170" y2="110" stroke="#e75480" stroke-width="3" stroke-linecap="round" />
@@ -204,18 +208,14 @@ html,body{
       <line x1="6" y1="214" x2="170" y2="110" stroke="#e75480" stroke-width="3" stroke-linecap="round" />
       <line x1="334" y1="214" x2="170" y2="110" stroke="#e75480" stroke-width="3" stroke-linecap="round" />
     </svg>
-    <div class="heart" id="heart" aria-hidden="false" role="button" title="Open letter"></div>
+    <div class="heart" id="heart"></div>
   </div>
 
   <div class="letter" id="letter">
-    <h2>Happy Birthday, My Love 🎉</h2>
+    <h2>Happy Birthday 🎉</h2>
     <p>
-      Wishing you the happiest birthday, my darling! 💕<br><br>
-      Even though we’re far apart today, my heart is right there with you.
-      I’m counting down to all the new memories we’ll make together.
-      You mean the world to me — forever and always.
-      <br><br>
-      With all my love,<br>❤️ Yours forever
+      Happy birthday to you vaveee. I lovee youu soo soo muchh, this my first birthday with you and here is me being there for you in all our birthdays from now on. I love you mwuahhh. <br><br>
+      ❤️ Naveen
     </p>
   </div>
 </div>
@@ -227,7 +227,7 @@ const envelope = document.getElementById('envelope');
 const decorations = document.getElementById('decorations');
 const audio = new Audio('path/to/your/pop_sound.mp3');
 
-// --- Generate decorations dynamically ---
+// Decorations
 const decoTypes = ['balloon','floating-heart','confetti','flower','cake'];
 const decoCount = { 'balloon':20, 'floating-heart':20, 'confetti':30, 'flower':15, 'cake':10 };
 
@@ -243,7 +243,7 @@ decoTypes.forEach(type=>{
   }
 });
 
-// --- Heart Burst ---
+// Heart burst
 function createHeartBurst(centerElement){
   const rect = centerElement.getBoundingClientRect();
   const centerX = rect.left + rect.width/2;
@@ -273,7 +273,7 @@ function createHeartBurst(centerElement){
   }
 }
 
-// --- Envelope Open ---
+// Envelope open
 function toggleOpen(e){
   e.stopPropagation();
   if(!stage.classList.contains('open')){
